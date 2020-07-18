@@ -88,8 +88,10 @@ get_hps <- function(week) {
           THHLD_NUMADLT = col_double()
         )
     ) %>%
-    janitor::clean_names(case = "snake") %>% 
+    rename_with(str_to_lower) %>% 
     rename(fips = est_st)
+  
+  # Validate data
   stopifnot(
     n_distinct(data$week) == 1,
     all(!is.na(data$pweight)) && 0 < min(data$pweight),
